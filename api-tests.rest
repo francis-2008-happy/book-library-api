@@ -1,0 +1,201 @@
+### Test: Server is running
+GET http://localhost:3000
+
+###
+
+### Test: Get all books (empty at first)
+GET http://localhost:3000/books
+
+###
+
+### Test: Create a new book
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "title": "1984 War",
+  "author": "F. Scott Fitzgerald",
+  "isbn": "978-0743273565",
+  "publishYear": 1984,
+  "genre": "Classic Fiction",
+  "description": "A classic American novel set in the Jazz Age, exploring themes of wealth, love, and the American Dream.",
+  "availableCopies": 5,
+  "totalCopies": 5
+}
+
+###
+
+### Test: Create another book
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "title": "To Kill a Mockingbird",
+  "author": "Harper Lee",
+  "isbn": "978-0061120084",
+  "publishYear": 1960,
+  "genre": "Classic Fiction",
+  "description": "A gripping tale of racial injustice and childhood innocence in the American South.",
+  "availableCopies": 3,
+  "totalCopies": 3
+}
+
+###
+
+### Test: Create a third book
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "title": "1984",
+  "author": "George Orwell",
+  "isbn": "978-0451524935",
+  "publishYear": 1949,
+  "genre": "Dystopian Fiction",
+  "description": "A dystopian social science fiction novel exploring surveillance, truth, and totalitarianism.",
+  "availableCopies": 4,
+  "totalCopies": 4
+}
+
+###
+
+### Test: Get all books (should show the books we created)
+GET http://localhost:3000/books
+
+###
+
+### Test: Get a single book by ID
+### IMPORTANT: Replace {bookId} with an actual ID from the previous GET request
+GET http://localhost:3000/books/6929d3c78a4b3219aa749392
+
+###
+
+### Test: Update a book
+### IMPORTANT: Replace {bookId} with an actual ID
+PUT http://localhost:3000/books/6929d3c78a4b3219aa749392
+Content-Type: application/json
+
+{
+  "title": "The Great Gatsby - Updated Edition",
+  "author": "F. Scott Fitzgerald",
+  "isbn": "978-0743273565",
+  "publishYear": 1925,
+  "genre": "Classic Fiction",
+  "description": "An updated edition of the classic American novel.",
+  "availableCopies": 8,
+  "totalCopies": 10
+}
+
+###
+
+### Test: Delete a book
+### IMPORTANT: Replace {bookId} with an actual ID
+DELETE http://localhost:3000/books/6929d3c78a4b3219aa749392
+
+###
+
+### Test: Get all authors (empty at first)
+GET http://localhost:3000/authors
+
+###
+
+### Test: Create a new author
+POST http://localhost:3000/authors
+Content-Type: application/json
+
+{
+  "name": "James Bond",
+  "birthYear": 1896,
+  "nationality": "American",
+  "biography": "Francis Scott Key Fitzgerald was an American novelist and short story writer, widely regarded as one of the greatest American writers of the 20th century.",
+  "books": ["The Great Gatsby", "Tender Is the Night", "The Beautiful and Damned"]
+}
+
+###
+
+### Test: Create another author
+POST http://localhost:3000/authors
+Content-Type: application/json
+
+{
+  "name": "Grace Lee",
+  "birthYear": 1926,
+  "nationality": "American",
+  "biography": "Nelle Harper Lee was an American novelist best known for her 1960 novel To Kill a Mockingbird, which won the Pulitzer Prize.",
+  "books": ["To Kill a Mockingbird", "Go Set a Watchman"]
+}
+
+###
+
+### Test: Get all authors
+GET http://localhost:3000/authors
+
+###
+
+### Test: Get a single author by ID
+### IMPORTANT: Replace {authorId} with an actual ID
+GET http://localhost:3000/authors/6929d5408a4b3219aa749399
+
+###
+
+### Test: Update an author
+### IMPORTANT: Replace {authorId} with an actual ID
+PUT http://localhost:3000/authors/6929d5408a4b3219aa749399
+Content-Type: application/json
+
+{
+  "name": "F. Scott Fitzgerald",
+  "birthYear": 1896,
+  "nationality": "American",
+  "biography": "Updated biography: One of the greatest American writers, known for capturing the Jazz Age in his works.",
+  "books": ["The Great Gatsby", "Tender Is the Night", "The Beautiful and Damned", "This Side of Paradise"]
+}
+
+###
+
+### Test: Delete an author
+### IMPORTANT: Replace {authorId} with an actual ID
+DELETE http://localhost:3000/authors/6929d5408a4b3219aa749399
+
+
+### Test: Create book with missing fields (should fail)
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "title": "Incomplete Book"
+}
+
+###
+
+### Test: Create book with invalid ISBN (should fail)
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "title": "Bad ISBN Book",
+  "author": "Test Author",
+  "isbn": "123",
+  "publishYear": 2020,
+  "genre": "Fiction",
+  "description": "This should fail because ISBN is invalid",
+  "availableCopies": 5,
+  "totalCopies": 5
+}
+
+###
+
+### Test: Create book with invalid year (should fail)
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "title": "Future Book",
+  "author": "Test Author",
+  "isbn": "978-0743273565",
+  "publishYear": 3000,
+  "genre": "Fiction",
+  "description": "This should fail because year is in the future",
+  "availableCopies": 5,
+  "totalCopies": 5
+}
