@@ -24,6 +24,8 @@ const options = {
       {
         url: 'https://your-app-name.onrender.com',
         description: 'Production server (update this when you deploy)'
+        url: 'https://book-library-api-855g.onrender.com',
+        description: 'Production server'
       }
     ],
     tags: [
