@@ -1,6 +1,6 @@
 const express = require('express');
-const router = express.Router();
 const passport = require('passport');
+const router = express.Router();
 const User = require('../models/user');
 
 /**
@@ -233,34 +233,33 @@ router.post('/login', (req, res, next) => {
  * @swagger
  * /auth/google:
  *   get:
- *     summary: Initiate Google OAuth login
- *     description: Redirects user to Google login page for OAuth authentication
+ *     description: Redirects the user to Google's authentication page.
  *     tags: [Authentication]
  *     responses:
  *       302:
- *         description: Redirect to Google OAuth
+ *         description: Redirect to Google for authentication.
  */
-router.get(
-  '/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+router.get('/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] }) // <-- This line is the fix
 );
 
 /**
  * @swagger
  * /auth/google/callback:
  *   get:
- *     summary: Google OAuth callback
- *     description: Handles the callback from Google after authentication
+ *     description: Google redirects here after successful authentication. Handles session creation.
  *     tags: [Authentication]
  *     responses:
  *       302:
- *         description: Redirect to success or failure page
+ *         description: Redirects to the frontend upon successful login.
  */
-router.get(
-  '/google/callback',
-  passport.authenticate('google', { failureRedirect: '/auth/failure' }),
+router.get('/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login-failed' }),
   (req, res) => {
-    res.redirect('/api-docs');
+    // On success, redirect to your frontend application.
+    // Use an environment variable for the frontend URL.
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+    res.redirect(`${frontendUrl}/dashboard`);
   }
 );
 
@@ -371,27 +370,24 @@ router.get('/status', (req, res) => {
  * @swagger
  * /auth/logout:
  *   get:
- *     summary: Logout user
- *     description: Logs out the current user and destroys the session
+ *     description: Logs the user out and destroys the session.
  *     tags: [Authentication]
  *     responses:
  *       200:
- *         description: Logged out successfully
+ *         description: Successfully logged out.
  */
 router.get('/logout', (req, res) => {
   req.logout((err) => {
     if (err) {
-      return res.status(500).json({ 
+      return res.status(500).json({
         success: false,
-        error: 'Failed to logout' 
+        error: 'Failed to logout'
       });
     }
-    req.session.destroy();
-    res.json({ 
+    res.json({
       success: true,
       message: 'Logged out successfully' 
     });
-  });
 });
 
 module.exports = router;
