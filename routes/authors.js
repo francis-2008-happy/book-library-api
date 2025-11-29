@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const authorsController = require('../controllers/authors');
 const { validateAuthor, validateId } = require('../middleware/validation');
+const { isAuthenticated } = require('../middleware/auth');
+
 
 /**
  * @swagger
@@ -22,7 +24,7 @@ const { validateAuthor, validateId } = require('../middleware/validation');
  *       500:
  *         description: Server error
  */
-router.get('/', authorsController.getAllAuthors);
+router.get('/', isAuthenticated, authorsController.getAllAuthors);
 
 /**
  * @swagger
@@ -53,7 +55,7 @@ router.get('/', authorsController.getAllAuthors);
  *       500:
  *         description: Server error
  */
-router.get('/:id', validateId, authorsController.getAuthorById);
+router.get('/:id', isAuthenticated, validateId, authorsController.getAuthorById);
 
 /**
  * @swagger
@@ -108,7 +110,7 @@ router.get('/:id', validateId, authorsController.getAuthorById);
  *       500:
  *         description: Server error
  */
-router.post('/', validateAuthor, authorsController.createAuthor);
+router.post('/',isAuthenticated, validateAuthor, authorsController.createAuthor);
 
 /**
  * @swagger
@@ -158,7 +160,7 @@ router.post('/', validateAuthor, authorsController.createAuthor);
  *       500:
  *         description: Server error
  */
-router.put('/:id', validateId, validateAuthor, authorsController.updateAuthor);
+router.put('/:id', isAuthenticated, validateId, validateAuthor, authorsController.updateAuthor);
 
 /**
  * @swagger
@@ -184,6 +186,6 @@ router.put('/:id', validateId, validateAuthor, authorsController.updateAuthor);
  *       500:
  *         description: Server error
  */
-router.delete('/:id', validateId, authorsController.deleteAuthor);
+router.delete('/:id',  isAuthenticated, validateId, authorsController.deleteAuthor);
 
 module.exports = router;

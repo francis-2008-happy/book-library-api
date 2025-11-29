@@ -28,12 +28,20 @@ const options = {
     ],
     tags: [
       {
+        name: 'General',
+        description: 'General API information'
+      },
+      {
+        name: 'Authentication',
+        description: 'Google OAuth authentication endpoints'
+      },
+      {
         name: 'Books',
-        description: 'Operations related to books management'
+        description: 'Operations related to books management (requires authentication)'
       },
       {
         name: 'Authors',
-        description: 'Operations related to authors management'
+        description: 'Operations related to authors management (requires authentication)'
       }
     ],
     components: {

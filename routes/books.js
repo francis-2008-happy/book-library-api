@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const booksController = require('../controllers/books');
 const { validateBook, validateId } = require('../middleware/validation');
+const { isAuthenticated } = require('../middleware/auth');
+
 
 /**
  * @swagger
@@ -26,7 +28,7 @@ const { validateBook, validateId } = require('../middleware/validation');
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/', booksController.getAllBooks);
+router.get('/', isAuthenticated, booksController.getAllBooks);
 
 /**
  * @swagger
@@ -61,7 +63,7 @@ router.get('/', booksController.getAllBooks);
  *       500:
  *         description: Server error
  */
-router.get('/:id', validateId, booksController.getBookById);
+router.get('/:id', isAuthenticated, validateId, booksController.getBookById);
 
 /**
  * @swagger
@@ -133,7 +135,7 @@ router.get('/:id', validateId, booksController.getBookById);
  *       500:
  *         description: Server error
  */
-router.post('/', validateBook, booksController.createBook);
+router.post('/', isAuthenticated, validateBook, booksController.createBook);
 
 /**
  * @swagger
@@ -192,7 +194,7 @@ router.post('/', validateBook, booksController.createBook);
  *       500:
  *         description: Server error
  */
-router.put('/:id', validateId, validateBook, booksController.updateBook);
+router.put('/:id',isAuthenticated,  validateId, validateBook, booksController.updateBook);
 
 /**
  * @swagger
@@ -219,6 +221,6 @@ router.put('/:id', validateId, validateBook, booksController.updateBook);
  *       500:
  *         description: Server error
  */
-router.delete('/:id', validateId, booksController.deleteBook);
+router.delete('/:id', isAuthenticated, validateId, booksController.deleteBook);
 
 module.exports = router;
