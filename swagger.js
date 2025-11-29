@@ -22,9 +22,7 @@ const options = {
         description: 'Development server'
       },
       {
-        url: 'https://your-app-name.onrender.com',
-        description: 'Production server (update this when you deploy)'
-        url: 'https://book-library-api-855g.onrender.com',
+        url: 'https://book-library-api-c119.onrender.com',
         description: 'Production server'
       }
     ],
